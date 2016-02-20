@@ -102,10 +102,8 @@
       $scope.globalIdentifier = urlComponents[urlComponents.length-1];
       $scope.globalIdentifier = $scope.globalIdentifier ? $scope.globalIdentifier : new Date().getTime();
       $scope.syncRef          = new Firebase("https://hash2016.firebaseio.com/"+$scope.globalIdentifier);   
-      console.log($scope.globalIdentifier);
       //Read and sync with what Firebase has
       $scope.syncRef.once('value', function(dataSnapshot) { 
-        console.log(dataSnapshot.val());
         if(!$scope.$$phase) {
           setData(dataSnapshot.val());
         }
@@ -204,6 +202,16 @@
      */
     $scope.getImage = function(report) {
       return report.image ? report.image : 'images/default.png';
+    }
+
+    /**
+     * Change state, generate an id and redirect to editor
+     * @return     {[type]}                 [description]
+     */
+    $scope.newSketch = function() {
+      $scope.data = {};
+      $scope.globalIdentifier = new Date().getTime();
+      $state.go('editor', {'identifier': $scope.globalIdentifier});
     }
 
     //INITIALISE
