@@ -38,7 +38,7 @@
    * @param      {String}                 $scope) {               $scope.greeting [description]
    * @return     {[type]}                         [description]
    */
-  app.controller('EditorCtrl', ['$scope','$http','$mdDialog','$state','$rootScope', function($scope,$http,$mdDialog,$state,$rootScope) {
+  app.controller('EditorCtrl', ['$scope','$http','$mdDialog','$state','$rootScope', '$window', function($scope,$http,$mdDialog,$state,$rootScope,$window) {
 
     //Firebase reference
     $scope.syncRef;
@@ -153,6 +153,19 @@
 
     //INITIALISE
     initialise();
+
+    $window.setup = function(){
+      var canvas = createCanvas(480, 270); 
+      console.log( canvas );
+      canvas.position(300, 50);
+      stroke(500); 
+      fill(150);
+    };
+
+    $window.draw = function(){
+      background(255); 
+      rect(50,50,75,100);
+    };
 
   }]);
 
