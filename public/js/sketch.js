@@ -18,6 +18,10 @@
       //Read and sync with what Firebase has
       $scope.syncRef.on('value', function(dataSnapshot) { 
 		       $scope.data = dataSnapshot.val();
+		       var canvas = document.querySelector('.cnv_div');
+		       if(canvas){
+		       		canvas.remove();
+		       }
 		       var tagcode = document.querySelector('#code');
 		       tagcode.innerHTML = $scope.data.code;
 		       renderCode('displaycode');
