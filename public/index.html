@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="hacksummit">
+<head>
+    <title>Hello World, AngularJS - ViralPatel.net</title>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/md5.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body ng-controller="MainController">
+  
+    <!-- INPUT -->
+    Hashtags (separated by comma):
+    <input type="text" ng-model="input" /><button ng-click="sendHashTags()">Send</button>
+
+    <!-- OUTPUT -->
+    <div ng-repeat="item in output" style="width:100%; padding:20px;">
+      {{item}}
+    </div>
+
+</body>
+</html>
