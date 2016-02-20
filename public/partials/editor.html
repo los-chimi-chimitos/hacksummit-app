@@ -4,117 +4,110 @@
 		<header class="mdl-layout__header ">
 			<div class="mdl-layout__header-row">
 				<!-- Title -->
-				<span class="mdl-layout-title"><h2>Sketching tweets</h2></span>
+				<span class="mdl-layout-title"><h2><span style="opacity:0.5; margin-right:30px; font-size: 0.8em;">Sketch Project</span>
+				 <span style="font-size:1em;">{{data.name}}</span></h2></span>
 				<!-- Add spacer, to align navigation to the right -->
 				<div class="mdl-layout-spacer"></div>
-
+				<md-button class="md-accent md-raised md-hue-1" ng-click="newSketch()" style="background-color: deeppink; color:white;">New Sketch</md-button>
 			</div>
 		</header>
+
 		<main class="mdl-layout__content">
-			<div class="mdl-grid">
-				<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
-					<!-- HASHTAGS Input -->
-					<form action="#">
-						<div class="mdl-textfield mdl-js-textfield">
-							<input ng-model="data.tags" class="mdl-textfield__input" type="text" id="tag1">
-							<label class="mdl-textfield__label" for="tag1">Twitter's hashtags (separated by comma):
-							</label>
-						</div>
-						<div class="mdl-textfield mdl-js-textfield">
-							<input ng-model="data.author" class="mdl-textfield__input" type="name1">
-							<label class="mdl-textfield__label" for="name1">Author
-							</label>
-						</div>
-						<div class="mdl-textfield mdl-js-textfield">
-							<input ng-model="data.image" class="mdl-textfield__input" type="name1">
-							<label class="mdl-textfield__label" for="name1">Image Url
-							</label>
-						</div>
-					</form>
-					<!-- HASHTAGS Input -->
-					<img ng-src="{{data.image}}" style="width:250px; height:150px;"></img>
 
-				</div>
-				<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone">
+			<form>
+				<!-- INPUT FIELDS METADATA -->
+				<div class="mdl-grid">
 
-					<form action="#">
-						<div class="mdl-textfield mdl-js-textfield">
-							<input ng-model="data.name" class="mdl-textfield__input" type="name1">
-							<label class="mdl-textfield__label" for="name1">Sketch name
-							</label>
-						</div>
-						<div class="mdl-textfield mdl-js-textfield">
-							<input ng-model="data.description" class="mdl-textfield__input" type="name1">
-							<label class="mdl-textfield__label" for="name1">Description
-							</label>
-						</div>
-					</form>
-				</div>
+					<div class="mdl-cell mdl-cell--5-col mdl-cell--5-col-phone" style="margin-top:-10px;">
 
-				<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone">
+							<div class="mdl-textfield mdl-js-textfield">
+								<md-input-container class="md-block md-input-invalid">
+									<label for="input_80">Sketch Name</label>
+									<input required="" name="name" ng-model="data.name" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" id="input_80" aria-required="true" aria-invalid="true" style="">
+									<div ng-messages="projectForm.name.$error" class="md-input-messages-animation md-auto-hide ng-active" aria-live="primary">
+										<div ng-message="required" class="md-input-message-animation ng-scope" style="opacity: 1; margin-top: 0px;">Name of the Sketch</div>
+									</div>
+									<div class="md-errors-spacer"></div>
+								</md-input-container>
+							</div>
+							<div class="mdl-textfield mdl-js-textfield">
+								<md-input-container class="md-block md-input-invalid">
+								<label for="input_82">Author</label>
+								<input required="" name="author" ng-model="data.author" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" id="input_82" aria-required="true" aria-invalid="true" style="">
+								<div ng-messages="projectForm.author.$error" class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
+									<div ng-message="required" class="md-input-message-animation ng-scope" style="opacity: 1; margin-top: 0px;">Original author of this Sketch</div>
+								</div>
+								<div class="md-errors-spacer"></div></md-input-container>
+							</div>
+			
+					</div>
+
+					<div class="mdl-cell mdl-cell--7-col mdl-cell--7-col-phone" style="float:left;">
+
+						<md-input-container class="md-block md-input-invalid">
+						<label for="input_81">Description</label>
+						<input required="" name="description" ng-model="data.description" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" id="input_81" aria-required="true" aria-invalid="true" style="">
+						<div ng-messages="projectForm.description.$error" class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
+							<div ng-message="required" class="md-input-message-animation ng-scope" style="opacity: 1; margin-top: 0px;">What is this Sketch about?</div>
+						</div>
+						<div class="md-errors-spacer"></div></md-input-container>
+
+					</div>
+
+
+					<div class="mdl-cell mdl-cell--5-col mdl-cell--5-col-phone" style="margin-top:-50px;">
+
+						<div ng-init="initTags()">
+							<md-container class="md-block">
+							<span class="md-title">Keywords to listen to from Twitter</span>
+								<md-chips ng-model="data.tags"
+								placeholder="Enter a tag"
+								secondary-placeholder="Comma separated tags" readonly="false">
+							</md-chips>
+						</div>
+					</div>
+
+					<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone" style="margin-top:-32px; float: right;">
+
+						<md-input-container class="md-block md-input-invalid">
+						<label for="input_86">Thumbnail URL</label>
+						<input required="" name="image" ng-model="data.image" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" id="input_86" aria-required="true" aria-invalid="true" style="">
+						<div ng-messages="projectForm.image.$error" class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
+							<div ng-message="required" class="md-input-message-animation ng-scope" style="opacity: 1; margin-top: 0px;">Banner image URL for this sketch</div>
+						</div>
+						<div class="md-errors-spacer"></div></md-input-container>
+
+					</div>
+
+					<div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-phone" style="margin-top:-70px;">
+						<img class="img-circle" src="{{getImage(data)}}" style="width:120px; height:120px;">
+					</div>
+
+				</form>
+
+				<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone" style="float:right; margin-top: -40px;">
 					<button ng-click="sendSketch()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
 						Save &amp; Share
 					</button>
-					<button ng-click="newSketch()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-						New Sketch
+					<button ng-click="runSketch()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+						Run
 					</button>
 				</div>
+
 			</div>
 
 			<div class="mdl-grid">
-				<div ui-ace="{ onLoad: aceLoaded, onChange: aceChanged }" id="editor" class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet" >
-					
+				<div ui-ace="{ onLoad: aceLoaded, onChange: aceChanged }" id="editor" class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet" >
 				</div>
 
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet" id="myCanvas" >
-
-					<!--
-					<script type="text/javascript">
-						/*
-						function setup() {
-						  createCanvas(480, 270);
-						  stroke(0); 
-						  fill(150);
-						}
-
-						function draw() {
-						  background(51);
-						  rect(50,50,75,100);
-						}
-						*/
-					</script>
-					-->
-					
-				</div>
 			</div>
-
-		</div>
-
-		<div class="mdl-grid">
-			<div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet">
-				<h2>Sketch list</h2>
-				<div ng-repeat="skt in sketchs track by $index" class="mdl-list">
-
-				  	<div class="mdl-list__item">
-				    	<span class="mdl-list__item-primary-content">
-				      		<span><h4>{{skt.name}}</h4></span>		      
-				    	</span>
-				     	<a ng-click="editSketch(skt)" class="mdl-list__item-secondary-action" href="#">
-						<i class="material-icons">mode_edit</i></a>
-				    	<a target="blank" class="mdl-list__item-secondary-action" href="/sketch/{{skt.name}}"><i class="material-icons">open_in_new</i></a>
-				  	</div>
-	  			</div>
-			</div>
-		</div>
+		</main>
 	</div>
-</main>
-</div>
 
-
-<script>
+	<script>
 	var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/chrome");
-    editor.getSession().setMode("ace/mode/javascript");
-</script>
+	editor.setTheme("ace/theme/chrome");
+	editor.getSession().setMode("ace/mode/javascript");
+	</script>
 
 </div>

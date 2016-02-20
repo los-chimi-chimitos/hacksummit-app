@@ -17,7 +17,7 @@
       <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer"></div>
       <!-- Navigation. We hide it in small screens. -->
-      <button ng-click="newSketch()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+      <button ng-click="newSketch()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="background-color:deeppink; color:white;">
 			New Sketch
 		</button>
     </div>
@@ -37,17 +37,17 @@
 			  <p class="card__text">{{reports[key].description}}</p>
 			  <div class="card__action-bar row" style="padding-bottom:2px; padding-top: 5px;">
 			    <!-- <a class="card__button" ui-sref="editor({identifier: key})">EDIT</a> -->
-			    <button class="md-fab md-mini md-primary md-button md-ink-ripple col col-md-2" style="background:cornflowerblue; margin-right:4px;" ui-sref="editor({identifier: key})">
-			    	<md-icon style="fill: white; padding-right: 2px;" md-svg-src="/images/edit.svg" class="ng-scope ng-isolate-scope" aria-hidden="true"></md-icon>
+			    <button class="md-fab md-mini md-primary md-button md-ink-ripple col col-md-2" style="margin-top: -1px; padding: 6px; background:cornflowerblue; margin-right:4px;" ui-sref="editor({identifier: key})">
+			    	<md-icon style="fill: white; margin-bottom: 12px;" md-svg-src="/images/edit.svg" class="ng-scope ng-isolate-scope" aria-hidden="true"></md-icon>
 			    	<div class="md-ripple-container"></div>
 				</button>
-				<button class="md-fab md-mini md-primary md-button md-ink-ripple col col-md-2" style="background:hotpink;" ui-sref="sketch({identifier: key})">
-			    	<md-icon style="fill: white; padding-right: 2px;" md-svg-src="/images/play.svg" class="ng-scope ng-isolate-scope" aria-hidden="true"></md-icon>
+				<button class="md-fab md-mini md-primary md-button md-ink-ripple col col-md-2" style="margin-top: -1px; padding: 6px; background:hotpink;" ui-sref="sketch({identifier: key})">
+			    	<md-icon style="fill: white; margin-bottom: 12px;" md-svg-src="/images/play.svg" class="ng-scope ng-isolate-scope" aria-hidden="true"></md-icon>
 			    	<div class="md-ripple-container"></div>
 				</button>
 				<span class="col col-md-6" style="margin-left: 15px; font-weight: bold;  font-size: 1.1em; max-height: 30px; max-width:190px; display:inline-block;">By {{reports[key].author}}<br><small style="color:#999;">{{formatDate(reports[key].created)}}</small></span>
-			    <button class="md-fab md-mini md-primary md-button md-ink-ripple col col-md-2" style="background:lightblue; float: right; margin-right: 3px;" ui-sref="sketch({identifier: key})">
-			    	<md-icon style="fill: white; padding-right: 2px;" md-svg-src="/images/share.svg" class="ng-scope ng-isolate-scope" aria-hidden="true"></md-icon>
+			    <button class="md-fab md-mini md-primary md-button md-ink-ripple col col-md-2" style="margin-top: -1px; background:lightblue; float: right; margin-right: 3px; padding: 6px;" ui-sref="sketch({identifier: key})">
+			    	<md-icon style="fill: white; margin-bottom: 12px;" md-svg-src="/images/share.svg" class="ng-scope ng-isolate-scope" aria-hidden="true"></md-icon>
 			    	<div class="md-ripple-container"></div>
 				</button>
 			  </div>
