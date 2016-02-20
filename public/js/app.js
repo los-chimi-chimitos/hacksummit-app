@@ -38,7 +38,7 @@
    * @param      {String}                 $scope) {               $scope.greeting [description]
    * @return     {[type]}                         [description]
    */
-  app.controller('EditorCtrl', ['$scope','$http','$mdDialog','$state','$rootScope','$mdConstant', function($scope,$http,$mdDialog,$state,$rootScope,$mdConstant) {
+  app.controller('EditorCtrl', ['$scope','$http','$mdDialog','$state','$rootScope','$mdConstant', '$window', 'CONSTANTS', function($scope,$http,$mdDialog,$state,$rootScope,$mdConstant,$window,CONSTANTS) {
 
 
     //Firebase reference
@@ -78,6 +78,7 @@
      * @return     {[type]}                 [description]
      */
     function initialise() {
+        $window.tweetsDS = CONSTANTS.tweetsDS;
         //Initialise with data if coming from another place
         if ($state && $rootScope.reports) {
           $scope.data = $rootScope.reports[$state.params.identifier];
@@ -206,6 +207,11 @@
       return report.image ? report.image : 'images/default.png';
     }
 
+    /**
+     * Will fetch the code and render the report
+     * @param  {[type]} code [description]
+     * @return {[type]}      [description]
+     */
     function renderReport( code ){
       var canvas = document.querySelector('.cnv_div');
       if(canvas){
@@ -215,6 +221,7 @@
       tagcode.innerHTML = code;
       renderCode('displaycode');
     }
+
     /**
      * Change state, generate an id and redirect to editor
      * @return     {[type]}                 [description]
@@ -241,13 +248,28 @@
     $scope.syncRef;
     $scope.globalIdentifier = new Date().getTime();
     $scope.syncRef          = new Firebase("https://hash2016.firebaseio.com");   
+    $scope.init             = false;
+    //Read and sync with what Firebase has    
+    $scope.syncRef.on('value', function(dataSnapshot) { 
+      
+      if(!$scope.$$phase && !$scope.init) {
+        $scope.init = true;
+        $scope.$apply(function () { 
+          $scope.reports     = dataSnapshot.val();
+          $scope.keys        = Object.keys($scope.reports);
+          $rootScope.reports = $scope.reports;
+        })} else {
+          setTimeout(function () {
+              $scope.$apply(function () {
+                $scope.reports     = dataSnapshot.val();
+                $scope.keys        = Object.keys($scope.reports);
+                $rootScope.reports = $scope.reports;
+              });
+          }, 1000);
+        }
+      }
+    );
 
-    //Read and sync with what Firebase has
-    $scope.syncRef.on('value', function(dataSnapshot) { $scope.$apply(function () { 
-      $scope.reports     = dataSnapshot.val();
-      $scope.keys        = Object.keys($scope.reports);
-      $rootScope.reports = $scope.reports;
-    })});
 
     /**
      * Change state, generate an id and redirect to editor
@@ -275,6 +297,10 @@
      */
     $scope.getImage = function(report) {
       return report.image ? report.image : 'images/default.png';
+    }
+
+    function initialise() {
+
     }
 
   }]);

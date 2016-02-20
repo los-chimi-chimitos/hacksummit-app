@@ -607,3 +607,8 @@ svg {
 .md-toast.success {
     background-color: green;
 }
+
+.cnv_div canvas {
+    max-width: 100%;
+    height: auto;
+}
