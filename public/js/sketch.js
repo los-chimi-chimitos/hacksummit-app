@@ -2,7 +2,7 @@
   'use strict';
 
 
-  angular.module('hacksummit').controller('SketchCtrl', ['$scope','$http','$mdDialog','$state','$rootScope','$location',function($scope,$http,$mdDialog,$state,$rootScope,$location) {
+  angular.module('hacksummit').controller('SketchCtrl', ['$scope','$http','$mdDialog','$state','$location',function($scope,$http,$mdDialog,$state,$location) {
  //Firebase reference
     $scope.syncRef;
 
