@@ -89,6 +89,7 @@ io.on('connection', function(socket){
 
 //Message received
 tStream.on('tweet', function (tweet) {
+  console.log( tweet );
   //TO_DO OPTIMIZE BY IMPLEMENTING SOME PATTERN MATCHING ALGORITHM
   for (var identifier in clients) {
     //Evaluate, is message relevant for this client?
