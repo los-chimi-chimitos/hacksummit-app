@@ -14,10 +14,26 @@
      * @return     {[type]}                 [description]
      */
     function initialise() {
+
+      window['tweetsDS'] = [];
+       var socket = io();
+        
+        socket.on('output',function(tweet){
+               tweetsDS.push(tweet);
+             if(tweetsDS.length > 200){
+               tweetsDS.pop();
+          }  
+         });
+       
+
        $scope.syncRef = new Firebase("https://hash2016.firebaseio.com/"+$state.params.identifier);      
       //Read and sync with what Firebase has
       $scope.syncRef.on('value', function(dataSnapshot) { 
 		       $scope.data = dataSnapshot.val();
+           var tag = $scope.data.tags;
+           if(tag){
+              socket.emit('hashtags',$scope.data.tags); 
+           }           
 		       var canvas = document.querySelector('.cnv_div');
 		       if(canvas){
 		       		canvas.remove();
