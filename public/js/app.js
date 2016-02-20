@@ -105,7 +105,7 @@
       $scope.syncRef          = new Firebase("https://hash2016.firebaseio.com/"+$scope.globalIdentifier);   
       console.log($scope.globalIdentifier);
       //Read and sync with what Firebase has
-      $scope.syncRef.on('value', function(dataSnapshot) { 
+      $scope.syncRef.once('value', function(dataSnapshot) { 
         console.log(dataSnapshot.val());
         if(!$scope.$$phase) {
           setData(dataSnapshot.val());
