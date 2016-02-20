@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Sketch {{name}}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.1/material.indigo-pink.min.css">
+    <style type="text/css">
+        #fullscrenOver{
+          position: fixed;
+        }
+    </style>
+     <script src="/socket.io/socket.io.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r74/three.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.min.js"></script>
+     <script type="text/javascript">
+       (function(){
+        window['tweetsDS'] = [];
+        var socket = io();
+         socket.emit('hashtags','{{tags}}'.split(','));
+         socket.on('output',function(tweet){
+                tweetsDS.push(tweet);
+                if(tweetsDS.length > 1000){
+                  tweetsDS.pop();
+                }  
+         });
+       })();
+       {{code | raw }}
+       function mousePressed(){
+           var aEl =  document.querySelector('#fullscrenOver');       
+                 aEl.onclick = function(el){
+                  window[mousePressed]
+                    var fs = fullScreen();
+                    fullScreen(!fs);
+                 };
+       }
+     </script>
+  </head>
+
+  <body>
+    <a  id="fullscrenOver" href="#"><i class="material-icons">zoom_out_map</i></a>
+  </body>
+
+</html>

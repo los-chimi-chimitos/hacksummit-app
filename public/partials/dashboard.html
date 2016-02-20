@@ -1,0 +1,62 @@
+<div>
+
+<div style="padding-top:50px;position: absolute; left: 50%;">
+        <div style="position: relative; left: -50%;">
+          <h1>Hello there</h1>
+          <h3>Description here what the app is about and bla bla bla</h3>
+          <a href="#"><h1>Go to the App here</h1></a>
+        </div>
+    </div>
+
+<!-- Always shows a header, even in smaller screens. -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">[LOGO GOES HERE]</span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation. We hide it in small screens. -->
+      <button ng-click="newSketch()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+			New Sketch
+		</button>
+    </div>
+  </header>
+  <main class="mdl-layout__content">
+    <div class="page-content grid grid-pad" style="width:100%; padding: 35px;">
+
+
+    	<div ng-repeat="key in keys track by $index" style="padding:10px 10px; margin-top:15px;" class="col-1-3">
+    		<!-- {{reports[key]}} -->
+
+    		<div class="card card--big" style="margin-top:-20px;">
+    		   <span ng-if="reports[key].shared" style="position:absolute; color:white; font-size:2em; z-index:100; right:10px; top:10px;">{{reports[key].shared}}<i class="fa fa-heart" style="margin-left:8px; color:crimson;"></i></span>
+    		   <!-- <span ng-if="reports[key].created" style="position:absolute; color:white; font-size:1.2em; z-index:100; left:10px; top:10px;">{{formatDate(reports[key].created)}}</span> -->
+			  <div style="background-image: url({{getImage(reports[key])}})" class="card__image"></div>
+			  <h2 class="card__title">{{reports[key].name}}</h2><span class="card__subtitle">By {{reports[key].author}}</span>
+			  <p class="card__text">{{reports[key].description}}</p>
+			  <div class="card__action-bar row" style="padding-bottom:2px; padding-top: 5px;">
+			    <!-- <a class="card__button" ui-sref="editor({identifier: key})">EDIT</a> -->
+			    <button class="md-fab md-mini md-primary md-button md-ink-ripple col col-md-2" style="background:cornflowerblue; margin-right:4px;" ui-sref="editor({identifier: key})">
+			    	<md-icon style="fill: white; padding-right: 2px;" md-svg-src="/images/edit.svg" class="ng-scope ng-isolate-scope" aria-hidden="true"></md-icon>
+			    	<div class="md-ripple-container"></div>
+				</button>
+				<button class="md-fab md-mini md-primary md-button md-ink-ripple col col-md-2" style="background:hotpink;" ui-sref="sketch({identifier: key})">
+			    	<md-icon style="fill: white; padding-right: 2px;" md-svg-src="/images/play.svg" class="ng-scope ng-isolate-scope" aria-hidden="true"></md-icon>
+			    	<div class="md-ripple-container"></div>
+				</button>
+				<span class="col col-md-6" style="margin-left: 15px; font-weight: bold;  font-size: 1.1em; max-height: 30px; max-width:190px; display:inline-block;">By {{reports[key].author}}<br><small style="color:#999;">{{formatDate(reports[key].created)}}</small></span>
+			    <button class="md-fab md-mini md-primary md-button md-ink-ripple col col-md-2" style="background:lightblue; float: right; margin-right: 3px;" ui-sref="sketch({identifier: key})">
+			    	<md-icon style="fill: white; padding-right: 2px;" md-svg-src="/images/share.svg" class="ng-scope ng-isolate-scope" aria-hidden="true"></md-icon>
+			    	<div class="md-ripple-container"></div>
+				</button>
+			  </div>
+			</div>
+
+    	</div>
+
+    </div>
+  </main>
+</div>
+
+</div>

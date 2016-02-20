@@ -4,16 +4,51 @@ var app 	    = express();
 var http 	    = require('http').Server(app);
 var io 		    = require('socket.io')(http);
 var path 	    = require('path');
+var Firebase 	    = require('firebase');
 var Twitter   = require('node-tweet-stream');
-var tStream   = new Twitter({ consumer_key: 'f8GdXuni5nyMQ44jHuV87MJxD', consumer_secret: 'VHNgVnAF2rahIRNvGugAokLoTVcbnk7rHNkdzmZw1fq1XtbAwt', token: '101474406-GAWVCzXu7UZ5QZGeaLgncaQAeiG6QKIS5jr2XjS2',token_secret: 'DD7vOomrYynIMjdWoCwlPppY521rSJzIoS4nbubBfzdJe'});
-
+var cfg	      = require('./config.json');
+var swig       = require('swig');
+var tStream   = new Twitter(cfg);
+var firedb	= new Firebase('https://socket-streams.firebaseio.com');
 //Client map -> [id,["hashtag","hashtag2","hashtag3"]] So we can filter. We can extend to Redis later on if time allows it
 var clients = {};
 
+var tpl = swig.compileFile(__dirname + '/views/template.html');
+
+
 //Index path Listen on port
-app.use(express.static(__dirname + '/public'));
-app.get('/', function(req, res){ res.sendFile(path.resolve(__dirname + '/../public/index.html'));});
-app.get('/js/app.js', function(req, res) { res.sendfile(path.resolve(__dirname + '/../public/js/app.js'));  });
+app.use(require('body-parser').json());
+app.use(express.static(__dirname + '/../public'));
+// app.get('/:report', function(req, res){ 
+//   res.sendFile(path.resolve(__dirname + '/../public/index.html'));
+//    // res.send(req.params.report);
+// });
+
+// app.use(function(req, res) {
+//     // Use res.sendfile, as it streams instead of reading the file into memory.
+//     res.sendfile(__dirname + '/../public/index.html');
+// });
+
+app.get('/sketchs', function(req, res){
+  firedb.once('value',function(dataSketch){
+     res.json(dataSketch.val());
+  });
+});
+
+app.post('/savesketch', function(req, res){
+  var sketch = req.body;
+  firedb.child(sketch.name).set(sketch);
+  firedb.once('value',function(dataSketch){
+      res.json(dataSketch.val());
+  });
+});
+// app.get('/js/app.js', function(req, res) { res.sendFile(path.resolve(__dirname + '/../public/js/app.js'));  });
+
+app.get('/sketch/:sketchName', function(req, res) {   
+  firedb.child(req.params.sketchName).once('value',function(sketch){
+    res.send(tpl(sketch.val()));
+  });  
+});
 http.listen(3000, function(){ console.log('listening on *:3000'); });
 
 //Socket listener
@@ -49,6 +84,7 @@ io.on('connection', function(socket){
     });
   });
 
+  
 });
 
 //Message received

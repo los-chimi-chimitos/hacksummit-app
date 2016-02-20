@@ -1,0 +1,103 @@
+<div id="popupContainer">
+
+	<div class="mdl-layout mdl-js-layout">
+		<header class="mdl-layout__header ">
+			<div class="mdl-layout__header-row">
+				<!-- Title -->
+				<span class="mdl-layout-title"><h2>Sketching tweets</h2></span>
+				<!-- Add spacer, to align navigation to the right -->
+				<div class="mdl-layout-spacer"></div>
+
+			</div>
+		</header>
+		<main class="mdl-layout__content">
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+					<!-- HASHTAGS Input -->
+					<form action="#">
+						<div class="mdl-textfield mdl-js-textfield">
+							<input ng-model="data.tags" class="mdl-textfield__input" type="text" id="tag1">
+							<label class="mdl-textfield__label" for="tag1">Twitter's hashtags (separated by comma):
+							</label>
+						</div>
+						<div class="mdl-textfield mdl-js-textfield">
+							<input ng-model="data.author" class="mdl-textfield__input" type="name1">
+							<label class="mdl-textfield__label" for="name1">Author
+							</label>
+						</div>
+						<div class="mdl-textfield mdl-js-textfield">
+							<input ng-model="data.image" class="mdl-textfield__input" type="name1">
+							<label class="mdl-textfield__label" for="name1">Image Url
+							</label>
+						</div>
+					</form>
+					<!-- HASHTAGS Input -->
+					<img ng-src="{{data.image}}" style="width:250px; height:150px;"></img>
+
+				</div>
+				<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone">
+
+					<form action="#">
+						<div class="mdl-textfield mdl-js-textfield">
+							<input ng-model="data.name" class="mdl-textfield__input" type="name1">
+							<label class="mdl-textfield__label" for="name1">Sketch name
+							</label>
+						</div>
+						<div class="mdl-textfield mdl-js-textfield">
+							<input ng-model="data.description" class="mdl-textfield__input" type="name1">
+							<label class="mdl-textfield__label" for="name1">Description
+							</label>
+						</div>
+					</form>
+				</div>
+
+				<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone">
+					<button ng-click="sendSketch()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+						Save &amp; Share
+					</button>
+					<button ng-click="newSketch()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+						New Sketch
+					</button>
+				</div>
+
+
+
+
+			</div>
+
+			<div class="mdl-grid">
+				<div ui-ace="{ onLoad: aceLoaded, onChange: aceChanged }" id="editor" class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet" >
+			</div>
+
+	</div>
+
+	<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet">
+				<h2>Sketch list</h2>
+	<div ng-repeat="skt in sketchs track by $index" class="mdl-list">
+
+		  <div class="mdl-list__item">
+		    <span class="mdl-list__item-primary-content">
+		      <span><h4>{{skt.name}}</h4></span>		      
+		    </span>
+		     <a ng-click="editSketch(skt)" class="mdl-list__item-secondary-action" href="#">
+			<i class="material-icons">mode_edit</i></a>
+		    <a target="blank" class="mdl-list__item-secondary-action" href="/sketch/{{skt.name}}"><i class="material-icons">open_in_new</i></a>
+		  </div>
+
+  </div>
+				</div>
+	</div>
+
+</div>
+</main>
+</div>
+
+
+<script>
+	var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/chrome");
+    editor.getSession().setMode("ace/mode/javascript");
+</script>
+
+</div>
