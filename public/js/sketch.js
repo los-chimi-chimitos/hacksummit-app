@@ -20,7 +20,7 @@
         
         socket.on('output',function(tweet){
                tweetsDS.push(tweet);
-             if(tweetsDS.length > 1000){
+             if(tweetsDS.length > 200){
                tweetsDS.pop();
           }  
          });
