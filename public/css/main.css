@@ -579,3 +579,31 @@ svg {
   fill:#fff;
   padding:2px;
 }
+
+.md-chips .md-chip {
+    cursor: default;
+    border-radius: 16px;
+    display: block;
+    height: 32px;
+    line-height: 32px;
+    margin: 8px 8px 0 0;
+    padding: 0 12px;
+    float: left;
+    box-sizing: border-box;
+    max-width: 100%;
+    position: relative;
+    background: deeppink;
+    color: white;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+.md-toast.error {
+    background-color: red;
+}
+
+.md-toast.success {
+    background-color: green;
+}

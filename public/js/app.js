@@ -8,7 +8,7 @@
    *
    * Main module of the application.
    */
-  var app = angular.module('hacksummit', ['ngRoute','ui.router','ngAnimate','ngMaterial','ui.ace']);
+  var app = angular.module('hacksummit', ['ngRoute','ui.router','ngAnimate','ngMaterial','ui.ace','ngTagsInput']);
   app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     //
     // For any unmatched url, redirect to /state1
@@ -38,7 +38,7 @@
    * @param      {String}                 $scope) {               $scope.greeting [description]
    * @return     {[type]}                         [description]
    */
-  app.controller('EditorCtrl', ['$scope','$http','$mdDialog','$state','$rootScope', function($scope,$http,$mdDialog,$state,$rootScope) {
+  app.controller('EditorCtrl', ['$scope','$http','$mdDialog','$state','$rootScope','$mdConstant', function($scope,$http,$mdDialog,$state,$rootScope,$mdConstant) {
 
     //Firebase reference
     $scope.syncRef;
@@ -50,14 +50,26 @@
       author:'',
       name:''
     };
-
+    
     /**
      * Save and share link
      * @return     {[type]}                 [description]
      */
     $scope.sendSketch = function() {
-      $scope.syncRef.set($scope.data);
       notifyLink();
+    }
+
+    /**
+     * Initialise tags if none
+     * @return     {[type]}                 [description]
+     */
+    $scope.initTags = function(tags) {
+      if (!$scope.data) {
+        $scope.data = { code:"", tags:[], author:'', name:''  };
+      }
+      if (!$scope.data.tags || $scope.data.tags.length == 0) {
+        $scope.data.tags = ['hacksummit','today'];
+      }
     }
 
     /**
@@ -68,13 +80,13 @@
         //Initialise with data if coming from another place
         if ($state && $rootScope.reports) {
           $scope.data = $rootScope.reports[$state.params.identifier];
-          console.log($scope.data);
           setData($scope.data);
         }
 
         //Are we referencing a specific ID? if so, attempt to load it
         initAndBindSync();
     }
+
 
     /**
      * Everytime data about code, hashes or any other metadata of this report changes, sync with firebase
@@ -90,9 +102,10 @@
       $scope.globalIdentifier = urlComponents[urlComponents.length-1];
       $scope.globalIdentifier = $scope.globalIdentifier ? $scope.globalIdentifier : new Date().getTime();
       $scope.syncRef          = new Firebase("https://hash2016.firebaseio.com/"+$scope.globalIdentifier);   
-      
+      console.log($scope.globalIdentifier);
       //Read and sync with what Firebase has
       $scope.syncRef.on('value', function(dataSnapshot) { 
+        console.log(dataSnapshot.val());
         if(!$scope.$$phase) {
           setData(dataSnapshot.val());
         }
@@ -103,19 +116,21 @@
      * Apply data to scope so it gets triggered on the input fields not bound by native angular
      * @param      {[type]}                 data [description]
      */
-    function setData(data) {
+    function setData(data,cb) {
       $scope.$apply(function () {
           setTimeout(function () {
               $scope.$apply(function () {
-                  $scope.data = data;  
-                  //Validate
-
-                  if ($scope.data && $scope.data.code) {
-                    $scope.data.edited  = new Date().getTime();
-                    $scope.data.created = $scope.data.created ? $scope.data.created : $scope.data.edited;
-                    $scope.editor.setValue($scope.data.code,1);
-                    toastr.success('Report successfully saved', 'Awesome!');
+             
+                  if (!data || data == null) {
+                    return;
                   }
+                  // $scope.data = data;  
+                  var temp    = data.tags;
+                  $scope.data = data;
+                  $scope.initTags();
+                  
+                  //Validate
+                  store(cb);
               });
           }, 500);
       });
@@ -126,12 +141,44 @@
      * @return     {[type]}                 [description]
      */
     function notifyLink() {
-      var urlLink = window.location.href.toString()+$scope.globalIdentifier;
-      alert       = $mdDialog.alert().title('Share with your friends!').content(urlLink).ok('Ok');
-      $mdDialog.show( alert ).finally(function() { alert = undefined;});
       //Update favorites
       $scope.data.shared = $scope.data.shared ? parseInt($scope.data.shared)+1 : 1;
-      setData($scope.data);
+      store(function(success){
+        console.log(success);
+        if (success) {
+          toastr.success('Report synchronised', 'Awesome!');
+          var urlLink = window.location.href.toString().indexOf($scope.globalIdentifier) > -1 ? window.location.href.toString() : window.location.href.toString()+$scope.globalIdentifier;
+          alert       = $mdDialog.alert().title('Share with your friends!').content(urlLink).ok('Ok');
+          $mdDialog.show( alert ).finally(function() { alert = undefined;});
+        } else {
+          toastr.error('You may be missing to fill out fields','Missing fields');
+        }
+      });
+    }
+
+    /**
+     * Store to firebase
+     * @param      {Function}               cb [description]
+     * @return     {[type]}                    [description]
+     */
+    function store(cb) {
+      if (!$scope.data || !$scope.data.author || $scope.data.author == null || $scope.data.author.length == 0 || 
+          !$scope.data.description || $scope.data.description == null || $scope.data.description.length == 0 ||
+          !$scope.data.tags || $scope.data.tags == null || $scope.data.tags.length == 0 ||
+          !$scope.data.code || $scope.data.tags == null || $scope.data.tags.length == 0) {
+          if (cb) {
+            cb(false);
+          }
+          return;
+      }
+
+      $scope.data.edited  = new Date().getTime();
+      $scope.data.created = $scope.data.created ? $scope.data.created : $scope.data.edited;
+      $scope.editor.setValue($scope.data.code,1);
+      $scope.syncRef.set($scope.data);
+      if (cb) {
+        cb(true);
+      }
     }
 
     /**
@@ -151,6 +198,14 @@
       $scope.data.code = $scope.editor.getSession().getDocument().getValue();
     };
 
+    /**
+     * Load banner images for reports
+     * @return     {[type]}                 [description]
+     */
+    $scope.getImage = function(report) {
+      return report.image ? report.image : 'images/default.png';
+    }
+
     //INITIALISE
     initialise();
 
@@ -168,7 +223,7 @@
     $scope.syncRef;
     $scope.globalIdentifier = new Date().getTime();
     $scope.syncRef          = new Firebase("https://hash2016.firebaseio.com");   
-    
+
     //Read and sync with what Firebase has
     $scope.syncRef.on('value', function(dataSnapshot) { $scope.$apply(function () { 
       $scope.reports     = dataSnapshot.val();
