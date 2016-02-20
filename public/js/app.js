@@ -153,20 +153,6 @@
 
     //INITIALISE
     initialise();
-
-    $window.setup = function(){
-      var canvas = createCanvas(480, 270); 
-      console.log( canvas );
-      canvas.position(300, 50);
-      stroke(500); 
-      fill(150);
-    };
-
-    $window.draw = function(){
-      background(255); 
-      rect(50,50,75,100);
-    };
-
   }]);
 
 
