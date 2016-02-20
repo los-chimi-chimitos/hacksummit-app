@@ -32,7 +32,7 @@
 		       $scope.data = dataSnapshot.val();
            var tag = $scope.data.tags;
            if(tag){
-              socket.emit('hashtags',tag.split(',')); 
+              socket.emit('hashtags',$scope.data.tags); 
            }           
 		       var canvas = document.querySelector('.cnv_div');
 		       if(canvas){
