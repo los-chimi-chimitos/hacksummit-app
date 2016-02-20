@@ -197,6 +197,7 @@
      */
     $scope.aceChanged  = function () {
       $scope.data.code = $scope.editor.getSession().getDocument().getValue();
+      renderReport( $scope.data.code );
     };
 
     /**
@@ -205,6 +206,16 @@
      */
     $scope.getImage = function(report) {
       return report.image ? report.image : 'images/default.png';
+    }
+
+    function renderReport( code ){
+      var canvas = document.querySelector('.cnv_div');
+      if(canvas){
+        canvas.remove();
+      }
+      var tagcode = document.querySelector('#code');
+      tagcode.innerHTML = code;
+      renderCode('displaycode');
     }
 
     //INITIALISE
