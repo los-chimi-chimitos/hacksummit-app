@@ -248,13 +248,28 @@
     $scope.syncRef;
     $scope.globalIdentifier = new Date().getTime();
     $scope.syncRef          = new Firebase("https://hash2016.firebaseio.com");   
+    $scope.init             = false;
+    //Read and sync with what Firebase has    
+    $scope.syncRef.on('value', function(dataSnapshot) { 
+      
+      if(!$scope.$$phase && !$scope.init) {
+        $scope.init = true;
+        $scope.$apply(function () { 
+          $scope.reports     = dataSnapshot.val();
+          $scope.keys        = Object.keys($scope.reports);
+          $rootScope.reports = $scope.reports;
+        })} else {
+          setTimeout(function () {
+              $scope.$apply(function () {
+                $scope.reports     = dataSnapshot.val();
+                $scope.keys        = Object.keys($scope.reports);
+                $rootScope.reports = $scope.reports;
+              });
+          }, 1000);
+        }
+      }
+    );
 
-    //Read and sync with what Firebase has
-    $scope.syncRef.on('value', function(dataSnapshot) { $scope.$apply(function () { 
-      $scope.reports     = dataSnapshot.val();
-      $scope.keys        = Object.keys($scope.reports);
-      $rootScope.reports = $scope.reports;
-    })});
 
     /**
      * Change state, generate an id and redirect to editor
@@ -282,6 +297,10 @@
      */
     $scope.getImage = function(report) {
       return report.image ? report.image : 'images/default.png';
+    }
+
+    function initialise() {
+
     }
 
   }]);
