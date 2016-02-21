@@ -133,6 +133,7 @@
       $scope.syncRef.once('value', function(dataSnapshot) { 
         if(!$scope.$$phase) {
           setData(dataSnapshot.val());
+          $scope.templateSource =angular.copy($window.tweetDS);
         }
       });
     }
@@ -283,6 +284,8 @@
       if (!invoque) {
         invoque = true;
         setTimeout(function(){
+          $window.tweetsDS = CONSTANTS.tweetsDS;
+          $scope.tweetsDS =CONSTANTS.tweetsDS;
           renderReport( $scope.data.code );
           invoque = false;
         },2000);
