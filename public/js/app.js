@@ -44,7 +44,7 @@
     //Firebase reference
     $scope.syncRef;
     $scope.canShow = false;
-    $scope.editor  = editor;     
+    $scope.editor  = editor;
 
     //Object to use across the application
     $scope.data = {
@@ -218,9 +218,9 @@
      * @param      {[type]}                 _editor [description]
      * @return     {[type]}                         [description]
      */
-    $scope.aceLoaded = function(_editor) {
-
-      var initCode = "//there is a variable 'tweetsD' with tweets that will be constantly pushing data to its structure of\n"+
+   Rx.Observable.fromEvent($scope.editor, 'load').
+        subscribe(function(e){
+       var initCode = "//there is a variable 'tweetsD' with tweets that will be constantly pushing data to its structure of\n"+
                       "//Tweets, check the Twitter Stream API for the structure of the object returned\n"+
                       "var newY,\n" +
                       "i = 0,\n"+
@@ -266,29 +266,25 @@
                       "    textSize(55);\n"       +
                       "    text(tweet.user.name+':',width/5,y-55);\n"+
                       "    translate(0,270);\n"+
-                      "}";
-                        
+                      "}";                       
 
-      $scope.editor  = _editor;
-      $scope.editor.setValue(initCode);
-    };
-
-    /**
+            $scope.editor  = _editor;
+            $scope.editor.setValue(initCode);
+      
+    });
+     /**
      * Detected change on div input
      * @return     {[type]}                 [description]
      */
-    var invoque = false;
-    $scope.aceChanged  = function () {
-      $scope.data.code = $scope.editor.getSession().getDocument().getValue();
-      if (!invoque) {
-        invoque = true;
-        setTimeout(function(){
-          renderReport( $scope.data.code );
-          invoque = false;
-        },2000);
-      }
-    };
 
+    Rx.Observable.fromEvent($scope.editor, 'change').
+              debounce(3500).
+              subscribe(function(e){
+                    $scope.data.code = $scope.editor.
+                          getSession().getDocument().getValue();
+                    renderReport( $scope.data.code );
+    });
+  
     /**
      * Load banner images for reports
      * @return     {[type]}                 [description]
