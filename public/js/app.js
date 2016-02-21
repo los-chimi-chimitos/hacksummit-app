@@ -221,7 +221,7 @@
 
       var initCode = "//there is a variable 'tweetsD' with tweets that will be constantly pushing data to its structure of\n"+
                       "//Tweets, check the Twitter Stream API for the structure of the object returned\n"+
-                      "WARNING 'tweetsD' could contain a lot of items, be careful using it \n"+
+                      "//WARNING 'tweetsD' could contain a lot of items, be careful using it \n"+
                       "var newY,\n" +
                       "i = 0,\n"+
                       "word,\n" +
