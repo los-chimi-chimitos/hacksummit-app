@@ -218,8 +218,9 @@
      * @param      {[type]}                 _editor [description]
      * @return     {[type]}                         [description]
      */
-   Rx.Observable.fromEvent($scope.editor, 'load').
-        subscribe(function(e){
+   Rx.Observable.fromEvent($scope.editor, 'compositionStart').
+        subscribe(function(_editor){
+          console.log(editor);
        var initCode = "//there is a variable 'tweetsD' with tweets that will be constantly pushing data to its structure of\n"+
                       "//Tweets, check the Twitter Stream API for the structure of the object returned\n"+
                       "var newY,\n" +
