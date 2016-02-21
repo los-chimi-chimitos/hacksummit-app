@@ -92,16 +92,22 @@ tStream.on('tweet', function (tweet) {
   // console.log(tweet.text);
   //TO_DO OPTIMIZE BY IMPLEMENTING SOME PATTERN MATCHING ALGORITHM
   var whole = JSON.stringify(tweet).toString().toLowerCase();
+  // console.log(whole);
   for (var identifier in clients) {
     var relevant =false;
     //Evaluate, is message relevant for this client?
     for (var index in clients[identifier]){
       var tag = clients[identifier][index].toLowerCase();
+      // console.log('tag->'+tag);
       if (whole.indexOf(tag) > -1) {
+        // console.log("MATCH-------------");
         relevant = true;
         break;
       }
     }
+    // console.log("-------------------------------------;");
+    // console.log(relevant);
+    // console.log("-------------------------------------;");
     // var relevant = _.intersection(clients[identifier],tweet.text.toLowerCase().split(" ")).length > 0;
     //Send
     if (io.sockets.connected[identifier] && relevant == true) {
