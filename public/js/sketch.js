@@ -19,10 +19,7 @@
        var socket = io();
         
         socket.on('output',function(tweet){
-               tweetsDS.push(tweet);
-             if(tweetsDS.length > 200){
-               tweetsDS.pop();
-          }  
+               tweetsDS.push(tweet);      
          });
        
 
