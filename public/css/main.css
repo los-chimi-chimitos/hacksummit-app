@@ -608,7 +608,7 @@ svg {
     background-color: green;
 }
 
-.cnv_div canvas {
+#myCanvas .cnv_div canvas {
     max-width: 100%;
     max-height: 400px;
 }
