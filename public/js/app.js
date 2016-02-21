@@ -124,6 +124,9 @@
 
       var urlComponents       = window.location.href.split('/');
       $scope.globalIdentifier = urlComponents[urlComponents.length-1];
+      if ($scope.globalIdentifier) {
+        $scope.canShow = true;
+      }
       $scope.globalIdentifier = $scope.globalIdentifier ? $scope.globalIdentifier : new Date().getTime();
       $scope.syncRef          = new Firebase("https://hash2016.firebaseio.com/"+$scope.globalIdentifier);   
       //Read and sync with what Firebase has
@@ -171,6 +174,7 @@
           var urlLink = window.location.href.toString().indexOf($scope.globalIdentifier) > -1 ? window.location.href.toString() : window.location.href.toString()+$scope.globalIdentifier;
           alert       = $mdDialog.alert().title('Share with your friends!').content(urlLink).ok('Ok');
           $mdDialog.show( alert ).finally(function() { alert = undefined;});
+          $scope.canShow = true;
         } else {
           toastr.error('You may be missing to fill out fields','Missing fields');
         }
