@@ -204,59 +204,59 @@
      * @return     {[type]}                         [description]
      */
     $scope.aceLoaded = function(_editor) {
-      var initCode = "// in this scope would you find an array defined as 'tweetsDS' \n"+
-    "//for more information go http://p5js.org/ \n"+
-    "function setup(){ \n createCanvas(400,400); \n } \n"+
-    "function draw(){ \n background(0); \n fill(255); \n rect(mouseX,mouseY,50,50); \n }";
+    //   var initCode = "// in this scope would you find an array defined as 'tweetsDS' \n"+
+    // "//for more information go http://p5js.org/ \n"+
+    // "function setup(){ \n createCanvas(400,400); \n } \n"+
+    // "function draw(){ \n background(0); \n fill(255); \n rect(mouseX,mouseY,50,50); \n }";
 
 
-        // var initCode = "//there is a variable 'tweetsD' with tweets that will be constantly pushing data to its structure of\n"+
-        //                 "//Tweets, check the Twitter Stream API for the structure of the object returned\n"+
-        //                 "var newY,\n" +
-        //                 "i = 0,\n"+
-        //                 "word,\n" +
-        //                 "tss = tweetsDS,\n"+
-        //                 "flag;\n" +
-        //                 "/**\n"+
-        //                 "* Load everything here that needs to be one time only. This only runs once just after the preload\n"+
-        //                 "* it is the FIRST FUNCTION CALLED (once only)\n"+
-        //                 "**/\n"+
-        //                 "function preload(){\n"+
-        //                 "    flag = loadImage('https://upload.wikimedia.org/wikipedia/commons/e/eb/Flag_Of_Venezuela.jpg');\n"+
-        //                 "}\n"+
-        //                 "/**\n" +
-        //                 "* Initialise evetyhing here that needs to be one time only. This only runs once just after the preload\n"+
-        //                 "* it is the SECOND FUNCTION CALLED (once only)\n" +
-        //                 "**/\n"+
-        //                 "function setup(){\n" +
-        //                 "  createCanvas(displayWidth,displayHeight);\n"+
-        //                 "  background(flag);\n"+
-        //                 "  newY = height-100;\n"+
-        //                 "}\n"+
-        //                 "/**\n"+
-        //                 "* This function is called on every frame, it is here where all the processing of the displayed objects will happen\n"+
-        //                 "* Refer to the documentation on the P5.js library for details\n"+
-        //                 "* http://p5js.org/reference/\n" +
-        //                 "**/\n"+
-        //                 "function draw(){\n"+
-        //                 "   background(flag);\n"+
-        //                 "   noStroke();     \n"+
-        //                 "   for(var i = 0;i < tss.length; i++ ){\n"+
-        //                 "       showTweets(tss[i],newY);\n"+
-        //                 "    }\n"+
-        //                 "    newY = newY - 0.5;\n"+
-        //                 "}\n"+
-        //                 "/**\n"+ 
-        //                 "* Show the tweets moving up, remember we have access to the tweets through the 'tweetsDS' variable\n"+
-        //                 "**/\n" +
-        //                 "function showTweets(tweet,y){\n"+
-        //                 "    fill(0,150);\n" +
-        //                 "    textSize(28);\n" +  
-        //                 "    text(tweet.text,width/4,y);\n" +
-        //                 "    textSize(20);\n"       +
-        //                 "    text(tweet.user.name+':',width/4,y-35);\n"+
-        //                 "    translate(0,120);\n"+
-        //                 "}";
+        var initCode = "//there is a variable 'tweetsD' with tweets that will be constantly pushing data to its structure of\n"+
+                        "//Tweets, check the Twitter Stream API for the structure of the object returned\n"+
+                        "var newY,\n" +
+                        "i = 0,\n"+
+                        "word,\n" +
+                        "tss = tweetsDS,\n"+
+                        "flag;\n" +
+                        "/**\n"+
+                        "* Load everything here that needs to be one time only. This only runs once just after the preload\n"+
+                        "* it is the FIRST FUNCTION CALLED (once only)\n"+
+                        "**/\n"+
+                        "function preload(){\n"+
+                        "    flag = loadImage('https://pbs.twimg.com/media/CXMndYcWsAMfbXj.png');\n"+
+                        "}\n"+
+                        "/**\n" +
+                        "* Initialise evetyhing here that needs to be one time only. This only runs once just after the preload\n"+
+                        "* it is the SECOND FUNCTION CALLED (once only)\n" +
+                        "**/\n"+
+                        "function setup(){\n" +
+                        "  createCanvas(displayWidth,displayHeight);\n"+
+                        "  background(flag);\n"+
+                        "  newY = height-100;\n"+
+                        "}\n"+
+                        "/**\n"+
+                        "* This function is called on every frame, it is here where all the processing of the displayed objects will happen\n"+
+                        "* Refer to the documentation on the P5.js library for details\n"+
+                        "* http://p5js.org/reference/\n" +
+                        "**/\n"+
+                        "function draw(){\n"+
+                        "   background(flag);\n"+
+                        "   noStroke();     \n"+
+                        "   for(var i = 0;i < tss.length; i++ ){\n"+
+                        "       showTweets(tss[i],newY);\n"+
+                        "    }\n"+
+                        "    newY = newY - 0.5;\n"+
+                        "}\n"+
+                        "/**\n"+ 
+                        "* Show the tweets moving up, remember we have access to the tweets through the 'tweetsDS' variable\n"+
+                        "**/\n" +
+                        "function showTweets(tweet,y){\n"+
+                        "    fill(255);\n" +
+                        "    textSize(44);\n" +  
+                        "    text(tweet.text,width/5,y);\n" +
+                        "    textSize(55);\n"       +
+                        "    text(tweet.user.name+':',width/5,y-55);\n"+
+                        "    translate(0,270);\n"+
+                        "}";
                         
 
       $scope.editor  = _editor;
