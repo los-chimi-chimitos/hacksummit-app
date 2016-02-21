@@ -44,7 +44,7 @@
     //Firebase reference
     $scope.syncRef;
 
-    $scope.editor  = editor;
+    $scope.editor  = editor;     
 
     //Object to use across the application
     $scope.data = {
@@ -75,8 +75,10 @@
      * @return     {[type]}                 [description]
      */
     $scope.initTags = function(tags) {
+   
+
       if (!$scope.data) {
-        $scope.data = { code:"", tags:[], author:'', name:''  };
+        $scope.data = { code:'', tags:[], author:'', name:''  };
       }
       if (!$scope.data.tags || $scope.data.tags.length == 0) {
         $scope.data.tags = ['hacksummit','today'];
@@ -202,7 +204,12 @@
      * @return     {[type]}                         [description]
      */
     $scope.aceLoaded = function(_editor) {
+      var initCode = "// in this scope would you find an array defined as 'tweetsDS' \n"+
+    "//for more information go http://p5js.org/ \n"+
+    "function setup(){ \n createCanvas(400,400); \n } \n"+
+    "function draw(){ \n background(0); \n fill(255); \n rect(mouseX,mouseY,50,50); \n }";
       $scope.editor  = _editor;
+      $scope.editor.setValue(initCode);
     };
 
     /**

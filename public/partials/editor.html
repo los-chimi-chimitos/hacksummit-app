@@ -6,7 +6,7 @@
 				<!-- Title -->
 				<a href="#/"><img style="width: 80px; margin-left: -73px; margin-right: 13px;" src="/images/sketweets.png"></a>
 				<span class="mdl-layout-title"><h3><span style="opacity:0.5; margin-right:30px; font-size: 0.8em;">Sketch Project</span>
-				 <span style="font-size:1em;">{{data.name}}</span></h3></span>
+				<span style="font-size:1em;">{{data.name}}</span></h3></span>
 				<!-- Add spacer, to align navigation to the right -->
 				<div class="mdl-layout-spacer"></div>
 				<md-button class="md-accent md-raised md-hue-1" ng-click="newSketch()" style="background-color: deeppink; color:white;">New Sketch</md-button>
@@ -21,103 +21,105 @@
 
 					<div class="mdl-cell mdl-cell--5-col mdl-cell--5-col-phone" style="margin-top:-10px;">
 
-							<div class="mdl-textfield mdl-js-textfield">
-								<md-input-container class="md-block md-input-invalid">
-									<label for="input_80">Sketch Name</label>
-									<input required="" name="name" ng-model="data.name" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" id="input_80" aria-required="true" aria-invalid="true" style="">
-									<div ng-messages="projectForm.name.$error" class="md-input-messages-animation md-auto-hide ng-active" aria-live="primary">
-										<div ng-message="required" class="md-input-message-animation ng-scope" style="opacity: 1; margin-top: 0px;">Name of the Sketch</div>
-									</div>
-									<div class="md-errors-spacer"></div>
-								</md-input-container>
+						<div class="mdl-textfield mdl-js-textfield">
+							<md-input-container class="md-block md-input-invalid">
+							<label for="input_80">Sketch Name</label>
+							<input required="" name="name" ng-model="data.name" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" id="input_80" aria-required="true" aria-invalid="true" style="">
+							<div ng-messages="projectForm.name.$error" class="md-input-messages-animation md-auto-hide ng-active" aria-live="primary">
+								<div ng-message="required" class="md-input-message-animation ng-scope" style="opacity: 1; margin-top: 0px;">Name of the Sketch</div>
 							</div>
-							<div class="mdl-textfield mdl-js-textfield">
-								<md-input-container class="md-block md-input-invalid">
-								<label for="input_82">Author</label>
-								<input required="" name="author" ng-model="data.author" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" id="input_82" aria-required="true" aria-invalid="true" style="">
-								<div ng-messages="projectForm.author.$error" class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
-									<div ng-message="required" class="md-input-message-animation ng-scope" style="opacity: 1; margin-top: 0px;">Original author of this Sketch</div>
-								</div>
-								<div class="md-errors-spacer"></div></md-input-container>
-							</div>
-			
+							<div class="md-errors-spacer"></div>
+						</md-input-container>
 					</div>
-
-					<div class="mdl-cell mdl-cell--7-col mdl-cell--7-col-phone" style="float:left;">
-
+					<div class="mdl-textfield mdl-js-textfield">
 						<md-input-container class="md-block md-input-invalid">
-						<label for="input_81">Description</label>
-						<input required="" name="description" ng-model="data.description" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" id="input_81" aria-required="true" aria-invalid="true" style="">
-						<div ng-messages="projectForm.description.$error" class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
-							<div ng-message="required" class="md-input-message-animation ng-scope" style="opacity: 1; margin-top: 0px;">What is this Sketch about?</div>
+						<label for="input_82">Author</label>
+						<input required="" name="author" ng-model="data.author" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" id="input_82" aria-required="true" aria-invalid="true" style="">
+						<div ng-messages="projectForm.author.$error" class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
+							<div ng-message="required" class="md-input-message-animation ng-scope" style="opacity: 1; margin-top: 0px;">Original author of this Sketch</div>
 						</div>
 						<div class="md-errors-spacer"></div></md-input-container>
-
 					</div>
 
-
-					<div class="mdl-cell mdl-cell--5-col mdl-cell--5-col-phone" style="margin-top:-50px;">
-
-						<div ng-init="initTags()">
-							<md-container class="md-block">
-							<span class="md-title">Keywords to listen to from Twitter</span>
-								<md-chips ng-model="data.tags"
-								placeholder="Enter a tag"
-								secondary-placeholder="Comma separated tags" readonly="false">
-							</md-chips>
-						</div>
-					</div>
-
-					<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone" style="margin-top:-32px; float: right;">
-
-						<md-input-container class="md-block md-input-invalid">
-						<label for="input_86">Thumbnail URL</label>
-						<input required="" name="image" ng-model="data.image" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" id="input_86" aria-required="true" aria-invalid="true" style="">
-						<div ng-messages="projectForm.image.$error" class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
-							<div ng-message="required" class="md-input-message-animation ng-scope" style="opacity: 1; margin-top: 0px;">Banner image URL for this sketch</div>
-						</div>
-						<div class="md-errors-spacer"></div></md-input-container>
-
-					</div>
-
-					<div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-phone" style="margin-top:-70px;">
-						<img class="img-circle" src="{{getImage(data)}}" style="width:120px; height:120px;">
-					</div>
-
-				</form>
-
-				<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone" style="float:right; margin-top: -40px;">
-					<button ng-click="sendSketch()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-						Save &amp; Share
-					</button>
-					<button ng-click="runSketch()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-						Full Screen
-					</button>
 				</div>
+
+				<div class="mdl-cell mdl-cell--7-col mdl-cell--7-col-phone" style="float:left;">
+
+					<md-input-container class="md-block md-input-invalid">
+					<label for="input_81">Description</label>
+					<input required="" name="description" ng-model="data.description" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" id="input_81" aria-required="true" aria-invalid="true" style="">
+					<div ng-messages="projectForm.description.$error" class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
+						<div ng-message="required" class="md-input-message-animation ng-scope" style="opacity: 1; margin-top: 0px;">What is this Sketch about?</div>
+					</div>
+					<div class="md-errors-spacer"></div></md-input-container>
+
+				</div>
+
+
+				<div class="mdl-cell mdl-cell--5-col mdl-cell--5-col-phone" style="margin-top:-50px;">
+
+					<div ng-init="initTags()">
+						<md-container class="md-block">
+						<span class="md-title">Keywords to listen to from Twitter</span>
+						<md-chips ng-model="data.tags"
+						placeholder="Enter a tag"
+						secondary-placeholder="Comma separated tags" readonly="false">
+					</md-chips>
+				</div>
+			</div>
+
+			<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone" style="margin-top:-32px; float: right;">
+
+				<md-input-container class="md-block md-input-invalid">
+				<label for="input_86">Thumbnail URL</label>
+				<input required="" name="image" ng-model="data.image" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" id="input_86" aria-required="true" aria-invalid="true" style="">
+				<div ng-messages="projectForm.image.$error" class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
+					<div ng-message="required" class="md-input-message-animation ng-scope" style="opacity: 1; margin-top: 0px;">Banner image URL for this sketch</div>
+				</div>
+				<div class="md-errors-spacer"></div></md-input-container>
 
 			</div>
 
-			<div class="mdl-grid">
-				<div ui-ace="{ onLoad: aceLoaded, onChange: aceChanged }" id="editor" class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet" >
-				</div>
-
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet" id="myCanvas">
-					<div style="display:none;" class="displaycode">
-						<pre>
-							<code id="code" class="language-javascript">
-							</code>
-						</pre>
-					</div>
-				</div>
-
+			<div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-phone" style="margin-top:-70px;">
+				<img class="img-circle" src="{{getImage(data)}}" style="width:120px; height:120px;">
 			</div>
-		</main>
+
+		</form>
+
+		<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone" style="float:right; margin-top: -40px;">
+			<button ng-click="sendSketch()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+				Save &amp; Share
+			</button>
+			<button ng-click="runSketch()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+				Full Screen
+			</button>
+			<a title="We're using p5js as main Js lib take a look to the documentation reference or do whatever you want it's Js." target="blank" id="ref-man" href="http://p5js.org/reference/">
+				<img style="opacity: 0.3; margin-left: 15px; width: 70px;" src="http://p5js.org/img/p5js-beta.svg">
+			</a>
+		</div>
 	</div>
 
-	<script>
+	<div class="mdl-grid">
+		<div ui-ace="{ onLoad: aceLoaded, onChange: aceChanged }" id="editor" class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet" >
+		</div>
+
+		<div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet" id="myCanvas">
+			<div style="display:none;" class="displaycode">
+				<pre>
+					<code id="code" class="language-javascript">
+					</code>
+				</pre>
+			</div>
+		</div>
+
+	</div>
+</main>
+</div>
+
+<script>
 	var editor = ace.edit("editor");
 	editor.setTheme("ace/theme/chrome");
 	editor.getSession().setMode("ace/mode/javascript");
-	</script>
+</script>
 
 </div>
