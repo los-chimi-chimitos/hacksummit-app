@@ -44,6 +44,8 @@
     //Firebase reference
     $scope.syncRef;
 
+    $scope.editor  = editor;
+
     //Object to use across the application
     $scope.data = {
       code:"",
@@ -125,8 +127,6 @@
      * @param      {[type]}                 data [description]
      */
     function setData(data,cb) {
-      $scope.$apply(function () {
-          setTimeout(function () {
               $scope.$apply(function () {
              
                   if (!data || data == null) {
@@ -140,8 +140,6 @@
                   //Validate
                   store(cb);
               });
-          }, 500);
-      });
     }
 
     /**
