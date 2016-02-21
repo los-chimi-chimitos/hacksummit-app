@@ -38,7 +38,7 @@
    * @param      {String}                 $scope) {               $scope.greeting [description]
    * @return     {[type]}                         [description]
    */
-  app.controller('EditorCtrl', ['$scope','$http','$mdDialog','$state','$rootScope','$mdConstant', '$window', 'CONSTANTS', function($scope,$http,$mdDialog,$state,$rootScope,$mdConstant,$window,CONSTANTS) {
+  app.controller('EditorCtrl', ['$scope','$http','$mdDialog','$state','$rootScope','$mdConstant', '$window', 'CONSTANTS','$timeout',function($scope,$http,$mdDialog,$state,$rootScope,$mdConstant,$window,CONSTANTS,$timeout) {
 
 
     //Firebase reference
@@ -143,9 +143,8 @@
      * @param      {[type]}                 data [description]
      */
     function setData(data,cb) {
-              $scope.$apply(function () {
-                setTimeout(function () {
-                  $scope.$apply(function () {
+      $timeout(function() {
+           $scope.$apply(function () {
                     if (!data || data == null) {
                       return;
                     }
@@ -157,8 +156,7 @@
                     //Validate
                     store(cb);
                   });
-                  }, 500);
-                });
+      });
     }
 
     /**
@@ -218,9 +216,8 @@
      * @param      {[type]}                 _editor [description]
      * @return     {[type]}                         [description]
      */
-   Rx.Observable.fromEvent($scope.editor, 'compositionStart').
-        subscribe(function(_editor){
-          console.log(editor);
+
+     $scope.aceLoaded = function(_editor) {  
        var initCode = "//there is a variable 'tweetsD' with tweets that will be constantly pushing data to its structure of\n"+
                       "//Tweets, check the Twitter Stream API for the structure of the object returned\n"+
                       "var newY,\n" +
@@ -233,7 +230,7 @@
                       "* it is the FIRST FUNCTION CALLED (once only)\n"+
                       "**/\n"+
                       "function preload(){\n"+
-                      "    flag = loadImage('https://pbs.twimg.com/media/CXMndYcWsAMfbXj.png');\n"+
+                      "    flag = loadImage('http://lorempixel.com/g/400/200/');\n"+
                       "}\n"+
                       "/**\n" +
                       "* Initialise evetyhing here that needs to be one time only. This only runs once just after the preload\n"+
@@ -272,7 +269,7 @@
             $scope.editor  = _editor;
             $scope.editor.setValue(initCode);
       
-    });
+    };
      /**
      * Detected change on div input
      * @return     {[type]}                 [description]
@@ -329,7 +326,7 @@
    * @param      {String}                 $scope) {               $scope.greeting [description]
    * @return     {[type]}                         [description]
    */
-  app.controller('DashboardCtrl', ['$scope','$http','$mdDialog','$state','$rootScope', function($scope,$http,$mdDialog,$state,$rootScope) {
+  app.controller('DashboardCtrl', ['$scope','$http','$mdDialog','$state','$rootScope','$timeout', function($scope,$http,$mdDialog,$state,$rootScope,$timeout) {
 
     //Firebase reference
     $scope.syncRef;
@@ -347,13 +344,13 @@
           $rootScope.reports = $scope.reports;
 
         })} else {
-          setTimeout(function () {
+            $timeout(function() {
               $scope.$apply(function () {
                 $scope.reports     = dataSnapshot.val();
                 $scope.keys        = Object.keys($scope.reports);
                 $rootScope.reports = $scope.reports;
               });
-          }, 1000);
+          });
         }
       }
     );

@@ -5,7 +5,7 @@
   angular.module('hacksummit').controller('SketchCtrl', ['$scope','$http','$mdDialog','$state','$location',function($scope,$http,$mdDialog,$state,$location) {
  //Firebase reference
     $scope.syncRef;
-
+    console.log("sketchs")
     //Object to use across the application
     $scope.data = {};
    
