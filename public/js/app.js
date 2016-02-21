@@ -280,7 +280,6 @@
           $scope.reports     = dataSnapshot.val();
           $scope.keys        = Object.keys($scope.reports);
           $rootScope.reports = $scope.reports;
-          $scope.renderDashketch();
 
         })} else {
           setTimeout(function () {
@@ -293,9 +292,6 @@
         }
       }
     );
-    $scope.renderDashketch = function(){
-      renderCode('sketch-landing');
-    };
 
 
     /**
