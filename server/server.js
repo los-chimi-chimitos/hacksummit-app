@@ -89,10 +89,20 @@ io.on('connection', function(socket){
 
 //Message received
 tStream.on('tweet', function (tweet) {
+  // console.log(tweet.text);
   //TO_DO OPTIMIZE BY IMPLEMENTING SOME PATTERN MATCHING ALGORITHM
+  var whole = JSON.stringify(tweet).toString().toLowerCase();
   for (var identifier in clients) {
+    var relevant =false;
     //Evaluate, is message relevant for this client?
-    var relevant = _.intersection(clients[identifier],tweet.text.toLowerCase().split(" ")).length > 0;
+    for (var index in clients[identifier]){
+      var tag = clients[identifier][index].toLowerCase();
+      if (whole.indexOf(tag) > -1) {
+        relevant = true;
+        break;
+      }
+    }
+    // var relevant = _.intersection(clients[identifier],tweet.text.toLowerCase().split(" ")).length > 0;
     //Send
     if (io.sockets.connected[identifier] && relevant == true) {
       io.sockets.connected[identifier].emit('output', tweet);
