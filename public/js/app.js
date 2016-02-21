@@ -232,7 +232,7 @@
                       "* it is the FIRST FUNCTION CALLED (once only)\n"+
                       "**/\n"+
                       "function preload(){\n"+
-                      "    flag = loadImage('https://pbs.twimg.com/media/CXMndYcWsAMfbXj.png');\n"+
+                      "    flag = loadImage('http://lorempixel.com/400/200/abstract/1/');\n"+
                       "}\n"+
                       "/**\n" +
                       "* Initialise evetyhing here that needs to be one time only. This only runs once just after the preload\n"+
