@@ -128,18 +128,21 @@
      */
     function setData(data,cb) {
               $scope.$apply(function () {
-             
-                  if (!data || data == null) {
-                    return;
-                  }
-                  // $scope.data = data;  
-                  var temp    = data.tags;
-                  $scope.data = data;
-                  $scope.initTags();
-                  
-                  //Validate
-                  store(cb);
-              });
+                setTimeout(function () {
+                  $scope.$apply(function () {
+                    if (!data || data == null) {
+                      return;
+                    }
+                    // $scope.data = data;  
+                    var temp    = data.tags;
+                    $scope.data = data;
+                    $scope.initTags();
+                    
+                    //Validate
+                    store(cb);
+                  });
+                  }, 500);
+                });
     }
 
     /**
@@ -277,6 +280,8 @@
           $scope.reports     = dataSnapshot.val();
           $scope.keys        = Object.keys($scope.reports);
           $rootScope.reports = $scope.reports;
+          $scope.renderDashketch();
+
         })} else {
           setTimeout(function () {
               $scope.$apply(function () {
@@ -288,6 +293,9 @@
         }
       }
     );
+    $scope.renderDashketch = function(){
+      renderCode('sketch-landing');
+    };
 
 
     /**
