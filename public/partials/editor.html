@@ -90,8 +90,8 @@
 			<button ng-click="sendSketch()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
 				Save &amp; Share
 			</button>
-			<button ng-click="runSketch()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-				Full Screen
+			<button ng-click="runSketch()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" ng-disabled="!canShow">
+				<span>Watch Full Report</span>
 			</button>
 			<a title="We're using p5js as main Js lib take a look to the documentation reference or do whatever you want it's Js." target="blank" id="ref-man" href="http://p5js.org/reference/">
 				<img style="opacity: 0.3; margin-left: 15px; width: 70px;" src="http://p5js.org/img/p5js-beta.svg">
@@ -99,11 +99,12 @@
 		</div>
 	</div>
 
-	<div class="mdl-grid">
-		<div ui-ace="{ onLoad: aceLoaded, onChange: aceChanged }" id="editor" class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet" >
+	<div class="mdl-grid" style="margin:0 auto;">
+		<div style="border: 1px solid #aaa;" ui-ace="{ onLoad: aceLoaded, onChange: aceChanged }" id="editor" class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet" >
 		</div>
 
-		<div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet" id="myCanvas">
+		<div style="border: 1px solid #aaa;  background: rgba(255, 255, 255, 0.2) url(/images/sketweets.png) no-repeat 0 50%;  background-repeat: no-repeat;
+    background-position: center; " class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet" id="myCanvas">
 			<div style="display:none;" class="displaycode">
 				<pre>
 					<code id="code" class="language-javascript">
@@ -113,6 +114,21 @@
 		</div>
 
 	</div>
+	<div style="margin:0 auto; height:20vh; margin:-10px 15px;">
+
+		<div>
+			<a style="cursor:pointer;" ng-model="collapsed" ng-click="collapsed=!collapsed">Click here to <strong>Toggle Edit (show/hide)</strong> data source for the preview<br>Real data from stream will only be available for the selected tags on "Full Screen Mode", thats why we enabled a way for you to create dummy data for quick tests.</a>
+		</div>
+		<br><br>
+    	<div ng-show="collapsed">
+    		<!-- <input type="textarea" ng-model="tweetsDS" ng-change="updateSource()">{{tweetsDS}}</input> -->
+    		<div style="border: 1px solid #aaa;" class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet" >
+    			<textarea json-text ng-model="tweetsDS" ng-change="updateSource()" style="width:100%; height:auto; min-height:600px; background:darkslateblue; color:white;"></textarea>
+			</div>
+    	</div>
+
+	</div>
+
 </main>
 </div>
 

@@ -43,7 +43,7 @@
 
     //Firebase reference
     $scope.syncRef;
-
+    $scope.canShow = false;
     $scope.editor  = editor;     
 
     //Object to use across the application
@@ -91,6 +91,8 @@
      */
     function initialise() {
         $window.tweetsDS = CONSTANTS.tweetsDS;
+        $scope.tweetsDS  = $window.tweetsDS;
+
         //Initialise with data if coming from another place
         if ($state && $rootScope.reports) {
           $scope.data = $rootScope.reports[$state.params.identifier];
@@ -99,6 +101,14 @@
 
         //Are we referencing a specific ID? if so, attempt to load it
         initAndBindSync();
+    }
+
+    /**
+     * Update demo data source dummy
+     * @return     {[type]}                 [description]
+     */
+    $scope.updateSource = function() {
+      $window.tweetsDS = $scope.tweetsDS;
     }
 
 
@@ -204,59 +214,54 @@
      * @return     {[type]}                         [description]
      */
     $scope.aceLoaded = function(_editor) {
-    //   var initCode = "// in this scope would you find an array defined as 'tweetsDS' \n"+
-    // "//for more information go http://p5js.org/ \n"+
-    // "function setup(){ \n createCanvas(400,400); \n } \n"+
-    // "function draw(){ \n background(0); \n fill(255); \n rect(mouseX,mouseY,50,50); \n }";
 
-
-        var initCode = "//there is a variable 'tweetsD' with tweets that will be constantly pushing data to its structure of\n"+
-                        "//Tweets, check the Twitter Stream API for the structure of the object returned\n"+
-                        "var newY,\n" +
-                        "i = 0,\n"+
-                        "word,\n" +
-                        "tss = tweetsDS,\n"+
-                        "flag;\n" +
-                        "/**\n"+
-                        "* Load everything here that needs to be one time only. This only runs once just after the preload\n"+
-                        "* it is the FIRST FUNCTION CALLED (once only)\n"+
-                        "**/\n"+
-                        "function preload(){\n"+
-                        "    flag = loadImage('https://pbs.twimg.com/media/CXMndYcWsAMfbXj.png');\n"+
-                        "}\n"+
-                        "/**\n" +
-                        "* Initialise evetyhing here that needs to be one time only. This only runs once just after the preload\n"+
-                        "* it is the SECOND FUNCTION CALLED (once only)\n" +
-                        "**/\n"+
-                        "function setup(){\n" +
-                        "  createCanvas(displayWidth,displayHeight);\n"+
-                        "  background(flag);\n"+
-                        "  newY = height-100;\n"+
-                        "}\n"+
-                        "/**\n"+
-                        "* This function is called on every frame, it is here where all the processing of the displayed objects will happen\n"+
-                        "* Refer to the documentation on the P5.js library for details\n"+
-                        "* http://p5js.org/reference/\n" +
-                        "**/\n"+
-                        "function draw(){\n"+
-                        "   background(flag);\n"+
-                        "   noStroke();     \n"+
-                        "   for(var i = 0;i < tss.length; i++ ){\n"+
-                        "       showTweets(tss[i],newY);\n"+
-                        "    }\n"+
-                        "    newY = newY - 0.5;\n"+
-                        "}\n"+
-                        "/**\n"+ 
-                        "* Show the tweets moving up, remember we have access to the tweets through the 'tweetsDS' variable\n"+
-                        "**/\n" +
-                        "function showTweets(tweet,y){\n"+
-                        "    fill(255);\n" +
-                        "    textSize(44);\n" +  
-                        "    text(tweet.text,width/5,y);\n" +
-                        "    textSize(55);\n"       +
-                        "    text(tweet.user.name+':',width/5,y-55);\n"+
-                        "    translate(0,270);\n"+
-                        "}";
+      var initCode = "//there is a variable 'tweetsD' with tweets that will be constantly pushing data to its structure of\n"+
+                      "//Tweets, check the Twitter Stream API for the structure of the object returned\n"+
+                      "var newY,\n" +
+                      "i = 0,\n"+
+                      "word,\n" +
+                      "tss = tweetsDS,\n"+
+                      "flag;\n" +
+                      "/**\n"+
+                      "* Load everything here that needs to be one time only. This only runs once just after the preload\n"+
+                      "* it is the FIRST FUNCTION CALLED (once only)\n"+
+                      "**/\n"+
+                      "function preload(){\n"+
+                      "    flag = loadImage('https://pbs.twimg.com/media/CXMndYcWsAMfbXj.png');\n"+
+                      "}\n"+
+                      "/**\n" +
+                      "* Initialise evetyhing here that needs to be one time only. This only runs once just after the preload\n"+
+                      "* it is the SECOND FUNCTION CALLED (once only)\n" +
+                      "**/\n"+
+                      "function setup(){\n" +
+                      "  createCanvas(displayWidth,displayHeight);\n"+
+                      "  background(flag);\n"+
+                      "  newY = height-100;\n"+
+                      "}\n"+
+                      "/**\n"+
+                      "* This function is called on every frame, it is here where all the processing of the displayed objects will happen\n"+
+                      "* Refer to the documentation on the P5.js library for details\n"+
+                      "* http://p5js.org/reference/\n" +
+                      "**/\n"+
+                      "function draw(){\n"+
+                      "   background(flag);\n"+
+                      "   noStroke();     \n"+
+                      "   for(var i = 0;i < tss.length; i++ ){\n"+
+                      "       showTweets(tss[i],newY);\n"+
+                      "    }\n"+
+                      "    newY = newY - 0.5;\n"+
+                      "}\n"+
+                      "/**\n"+ 
+                      "* Show the tweets moving up, remember we have access to the tweets through the 'tweetsDS' variable\n"+
+                      "**/\n" +
+                      "function showTweets(tweet,y){\n"+
+                      "    fill(255);\n" +
+                      "    textSize(44);\n" +  
+                      "    text(tweet.text,width/5,y);\n" +
+                      "    textSize(55);\n"       +
+                      "    text(tweet.user.name+':',width/5,y-55);\n"+
+                      "    translate(0,270);\n"+
+                      "}";
                         
 
       $scope.editor  = _editor;
@@ -385,5 +390,63 @@
     }
 
   }]);
+
+/**
+ * Show text area input with json format
+ * @param      {[type]}                 ) {             return {    restrict: 'A',     require: 'ngModel',     link: function(scope, element, attrs, ngModelCtrl) {      var lastValid;            ngModelCtrl.$parsers.push(fromUser);      ngModelCtrl.$formatters.push(toUser);            element.bind('blur', function() {        element.val(toUser(scope.$eval(attrs.ngModel)));      });                  scope.$watch(attrs.ngModel, function(newValue, oldValue) {        lastValid [description]
+ * @return     {[type]}                   [description]
+ */
+app.directive('jsonText', function() {
+  return {
+    restrict: 'A', // only activate on element attribute
+    require: 'ngModel', // get a hold of NgModelController
+    link: function(scope, element, attrs, ngModelCtrl) {
+
+      var lastValid;
+
+      // push() if faster than unshift(), and avail. in IE8 and earlier (unshift isn't)
+      ngModelCtrl.$parsers.push(fromUser);
+      ngModelCtrl.$formatters.push(toUser);
+
+      // clear any invalid changes on blur
+      element.bind('blur', function() {
+        element.val(toUser(scope.$eval(attrs.ngModel)));
+      });
+
+      // $watch(attrs.ngModel) wouldn't work if this directive created a new scope;
+      // see http://stackoverflow.com/questions/14693052/watch-ngmodel-from-inside-directive-using-isolate-scope how to do it then
+      scope.$watch(attrs.ngModel, function(newValue, oldValue) {
+        lastValid = lastValid || newValue;
+
+        if (newValue != oldValue) {
+          ngModelCtrl.$setViewValue(toUser(newValue));
+
+          // TODO avoid this causing the focus of the input to be lost..
+          ngModelCtrl.$render();
+        }
+      }, true); // MUST use objectEquality (true) here, for some reason..
+
+      function fromUser(text) {
+        // Beware: trim() is not available in old browsers
+        if (!text || text.trim() === '') {
+          return {};
+        } else {
+          try {
+            lastValid = angular.fromJson(text);
+            ngModelCtrl.$setValidity('invalidJson', true);
+          } catch (e) {
+            ngModelCtrl.$setValidity('invalidJson', false);
+          }
+          return lastValid;
+        }
+      }
+
+      function toUser(object) {
+        // better than JSON.stringify(), because it formats + filters $$hashKey etc.
+        return angular.toJson(object, true);
+      }
+    }
+  };
+});
 
 })();
