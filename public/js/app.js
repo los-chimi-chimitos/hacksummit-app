@@ -183,9 +183,15 @@
       $scope.data.edited  = new Date().getTime();
       $scope.data.created = $scope.data.created ? $scope.data.created : $scope.data.edited;
       $scope.editor.setValue($scope.data.code,1);
-      $scope.syncRef.set($scope.data);
-      if (cb) {
-        cb(true);
+      if ($scope.globalIdentifier && $scope.globalIdentifier.length > 0) {
+        $scope.syncRef.set($scope.data);
+        if (cb) {
+          cb(true);
+        }
+      } else {
+        if (cb) {
+          cb(false);
+        }
       }
     }
 
