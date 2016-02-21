@@ -61,6 +61,14 @@
     }
 
     /**
+     * Run in full screen
+     * @return     {[type]}                 [description]
+     */
+    $scope.runSketch = function() {
+      $state.go('sketch', {'identifier': $scope.globalIdentifier});
+    }
+
+    /**
      * Initialise tags if none
      * @return     {[type]}                 [description]
      */
@@ -194,9 +202,16 @@
      * Detected change on div input
      * @return     {[type]}                 [description]
      */
+    var invoque = false;
     $scope.aceChanged  = function () {
       $scope.data.code = $scope.editor.getSession().getDocument().getValue();
-      renderReport( $scope.data.code );
+      if (!invoque) {
+        invoque = true;
+        setTimeout(function(){
+          renderReport( $scope.data.code );
+          invoque = false;
+        },2000);
+      }
     };
 
     /**
