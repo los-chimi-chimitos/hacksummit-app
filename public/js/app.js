@@ -122,8 +122,7 @@
      */
     function initAndBindSync() {
 
-      var urlComponents       = window.location.href.split('/');
-      $scope.globalIdentifier = urlComponents[urlComponents.length-1];
+      $scope.globalIdentifier = $state.params.identifier;
       if ($scope.globalIdentifier) {
         $scope.canShow = true;
       }
